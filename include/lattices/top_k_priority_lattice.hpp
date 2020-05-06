@@ -28,7 +28,14 @@ class TopKPriorityLattice : public Lattice<std::set<PriorityValuePair<P, V>>> {
   int k_ = K;
   void do_merge(const Element& e) override {
     for (const auto& p: e) {
-      this->element.insert(p);
+      bool repeated_priority = false;
+      for (const auto& pair : this->element) {
+        if (pair.priority == p.priority) {
+            repeated_priority = true;
+        }
+      } if (!repeated_priority) {
+        this->element.insert(p);
+      }
     }
 
     while (this->element.size() > k_) {
