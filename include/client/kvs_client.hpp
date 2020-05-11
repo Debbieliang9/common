@@ -169,7 +169,10 @@ class KvsClient : public KvsClientInterface {
           }
         }
       } else {
-        if (pending_put_response_map_.find(key) !=
+        if (response.response_id() == NULL) {
+          result.push_back(response);
+        } else {
+          if (pending_put_response_map_.find(key) !=
                 pending_put_response_map_.end() &&
             pending_put_response_map_[key].find(response.response_id()) !=
                 pending_put_response_map_[key].end()) {
@@ -182,7 +185,6 @@ class KvsClient : public KvsClientInterface {
                             .request_);
           } else {
             // error no == 0
-            result.push_back(response);
             pending_put_response_map_[key].erase(response.response_id());
 
             if (pending_put_response_map_[key].size() == 0) {
@@ -190,6 +192,7 @@ class KvsClient : public KvsClientInterface {
             }
           }
         }
+      }
       }
     }
 
