@@ -169,7 +169,7 @@ class KvsClient : public KvsClientInterface {
           }
         }
       } else {
-        if (response.response_id() == NULL) {
+        if (response.response_id() == "") {
           result.push_back(response);
         } else {
           if (pending_put_response_map_.find(key) !=
