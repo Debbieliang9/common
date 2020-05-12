@@ -185,6 +185,7 @@ class KvsClient : public KvsClientInterface {
                             .request_);
           } else {
             // error no == 0
+            result.push_back(response);
             pending_put_response_map_[key].erase(response.response_id());
 
             if (pending_put_response_map_[key].size() == 0) {
